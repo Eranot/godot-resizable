@@ -37,9 +37,9 @@ var min_size: Vector2 = Vector2(0, 0)
 @export 
 var max_size: Vector2 = Vector2(0, 0)
 
-## Keeps the control from being resized beyond the viewport.
+## Keeps the parent from being resized beyond the viewport.
 @export
-var clamp_to_viewport:=false
+var clamp_to_viewport: bool = false
 
 ## Whether each of the handles are active or not
 @export_flags("TOP", "BOTTOM", "LEFT", "RIGHT", "TOP_LEFT", "TOP_RIGHT", "BOTTOM_LEFT", "BOTTOM_RIGHT") 
@@ -69,7 +69,7 @@ func _input(event: InputEvent):
 
 
 func _on_mouse_move(event):
-	var handle = get_hovered_handle()
+	var handle = handle_being_resized if handle_being_resized != null else get_hovered_handle()
 		
 	if handle != null:
 		var is_handle_active = active_handles & handle
@@ -227,4 +227,3 @@ func _respect_min_max_size(new_size):
 		new_size.y = max_size.y
 	
 	return new_size
-	
